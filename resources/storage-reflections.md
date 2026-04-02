@@ -6,10 +6,8 @@ S3 bucket keeps private because the objects inside S3 are not public, and the ap
 AWS explains that objects inside S3 are private by default, and pre-signed URL provides a limited time access without change bucket policy.
 
 ## 2) Read about Global Secondary Indexes.  Explain why the two GSIs you created are useful, and why the specific attributes used for the hash and range keys are the right choices for those GSIs. It may be helpful to read the comments in the upload_photo and toggle_privacy functions in app/flask/photos.py
-The two GSIs are useful because the app need to search photos in more than one way. 
+The two GSIs are useful because the app needs to search photos in more than one way
 
-user-photos-index -> helps the app find all photos from one user and sort them by upload time.
+user-photos-index -> helps the app find all photos from one user. It uses 'user_id' as the hash key because that groups photos by user, and it uses 'uploaded_at' as the range key so the photos can be sorted by upload time
 
-feed-index -> helps the app find public photos for the home page and also sort them by upload time.
-
-I think these keys are helpful because they match what the app needs to do. One index is for a user’s own photos, and the other is for the public feed.
+feed-index -> helps the app find public photos for the home page. It uses 'feed_key' as the hash key because that separates the photos that should appear in the public feed, and it uses 'uploaded_at' as the range key so the newest photos can show first
